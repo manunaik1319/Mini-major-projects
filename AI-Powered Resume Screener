@@ -1,0 +1,591 @@
+# 🤖 AI-Powered Resume Screener
+
+> **Day 1 of 30 — 30 Days 30 BTech Projects**  
+> Domain: Artificial Intelligence & Machine Learning · Difficulty: Advanced  
+> Stack: Python · BERT · FastAPI · React
+
+---
+
+## 📌 Table of Contents
+
+- [Overview](#overview)
+- [Live Demo](#live-demo)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Project Structure](#project-structure)
+- [Getting Started](#getting-started)
+- [API Reference](#api-reference)
+- [ML Pipeline](#ml-pipeline)
+- [Environment Variables](#environment-variables)
+- [Testing](#testing)
+- [Docker Deployment](#docker-deployment)
+- [Extensions & Ideas](#extensions--ideas)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Overview
+
+The **AI-Powered Resume Screener** is an end-to-end ML system that automates candidate shortlisting for HR teams. It combines **BERT semantic embeddings** with **TF-IDF keyword matching** to score and rank resumes against a job description — surfacing the most relevant candidates with an explainable confidence score.
+
+```
+Upload JD + Resumes  →  NLP Scoring Engine  →  Ranked Shortlist  →  Export CSV
+```
+
+### Why this project?
+
+| Problem | Solution |
+|---------|----------|
+| HR teams spend ~23 hrs/hire on resume review | Automated scoring in seconds |
+| Inconsistent manual evaluation | Consistent, bias-aware ML scoring |
+| Missed qualified candidates | Semantic matching beyond keyword search |
+| Unscalable for 500+ applications | Async batch processing via FastAPI |
+
+---
+
+## Live Demo
+
+> 🔗 **Frontend:** [resume-screener.vercel.app](https://resume-screener.vercel.app) *(deploy your own)*  
+> 🔗 **API Docs:** [resume-screener-api.railway.app/docs](https://resume-screener-api.railway.app/docs)  
+> 🎥 **Demo Video:** [Watch on YouTube](#) *(2-min walkthrough)*
+
+---
+
+## Features
+
+- **Dual-model scoring** — BERT semantic similarity (60%) + TF-IDF keyword matching (40%)
+- **Multi-format parsing** — PDF and DOCX resume upload support
+- **Batch processing** — Upload 50+ resumes at once via drag-and-drop
+- **NER extraction** — Auto-extract candidate name, organisations, skills, and dates (spaCy)
+- **Shortlist threshold** — Configurable cutoff score (default: 0.65)
+- **SHAP explainability** — See the top keywords that drove each candidate's score
+- **CSV export** — Download the ranked shortlist with one click
+- **JWT authentication** — Secure HR-only access with token-based auth
+- **REST API** — All features accessible programmatically via FastAPI
+- **Docker ready** — One-command deployment with `docker compose up`
+
+---
+
+## Tech Stack
+
+### Backend
+| Layer | Technology | Version |
+|-------|-----------|---------|
+| API framework | FastAPI + Uvicorn | 0.111.0 |
+| BERT embeddings | sentence-transformers | 2.7.0 |
+| Keyword matching | Scikit-learn TF-IDF | 1.4.2 |
+| NLP / NER | spaCy (en_core_web_sm) | 3.7.4 |
+| PDF parsing | PyPDF2 + pdfplumber | 3.0.1 |
+| DOCX parsing | python-docx | 1.1.0 |
+| Database ORM | SQLAlchemy | 2.0.29 |
+| Authentication | python-jose (JWT) | 3.3.0 |
+| Password hashing | passlib (bcrypt) | 1.7.4 |
+| Explainability | SHAP | 0.45.0 |
+| Testing | Pytest | 8.2.0 |
+
+### Frontend
+| Layer | Technology |
+|-------|-----------|
+| Framework | React 18 + Vite |
+| Styling | Tailwind CSS |
+| Charts | Recharts |
+| API client | Axios + React Query |
+| File upload | react-dropzone |
+
+### DevOps
+| Tool | Purpose |
+|------|---------|
+| Docker + Compose | Containerisation |
+| GitHub Actions | CI/CD pipeline |
+| Railway | Backend hosting |
+| Vercel | Frontend hosting |
+
+---
+
+## Architecture
+
+```
+┌─────────────────────────────────────────────────────┐
+│                   React Frontend                    │
+│   Upload Panel · Results Table · Score Charts       │
+└────────────────────┬────────────────────────────────┘
+                     │ HTTP / JSON
+┌────────────────────▼────────────────────────────────┐
+│                 FastAPI Backend                     │
+│  /auth  /jd  /resume/upload  /score  /results      │
+│              JWT · Rate Limiting                    │
+└──────┬──────────────┬──────────────────────────────┘
+       │              │
+┌──────▼──────┐ ┌─────▼────────────────────────────┐
+│  SQLite /   │ │         ML Scoring Engine         │
+│  PostgreSQL │ │  Resume Parser (PyPDF2 + spaCy)  │
+│  (SQLAlch.) │ │  BERT Scorer (sentence-transf.)  │
+└─────────────┘ │  TF-IDF Scorer (Scikit-learn)    │
+                │  Ensemble: 0.6xBERT + 0.4xTFIDF  │
+                │  SHAP Explainer                   │
+                └──────────────────────────────────┘
+```
+
+### Scoring Formula
+
+```
+final_score = 0.6 x bert_cosine_similarity + 0.4 x tfidf_cosine_similarity
+
+shortlisted = final_score >= 0.65  (configurable)
+```
+
+---
+
+## Project Structure
+
+```
+resume-screener/
+│
+├── backend/
+│   ├── app/
+│   │   ├── api/
+│   │   │   ├── auth.py          # Login, JWT issue
+│   │   │   ├── jd.py            # Job description CRUD
+│   │   │   ├── resumes.py       # File upload endpoints
+│   │   │   └── scores.py        # Scoring trigger & results
+│   │   ├── core/
+│   │   │   ├── config.py        # Settings (env vars)
+│   │   │   ├── database.py      # SQLAlchemy engine + session
+│   │   │   └── security.py      # JWT create/verify, bcrypt
+│   │   ├── ml/
+│   │   │   ├── parser.py        # PDF/DOCX text extraction
+│   │   │   ├── bert_scorer.py   # sentence-transformers scoring
+│   │   │   ├── tfidf_scorer.py  # TF-IDF vectoriser & scoring
+│   │   │   ├── ensemble.py      # Weighted score combination
+│   │   │   └── explainer.py     # SHAP keyword explanation
+│   │   ├── models/
+│   │   │   └── db_models.py     # SQLAlchemy ORM models
+│   │   └── main.py              # FastAPI app entry point
+│   ├── tests/
+│   │   ├── test_parser.py
+│   │   ├── test_scorer.py
+│   │   └── test_api.py
+│   ├── requirements.txt
+│   └── Dockerfile
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── UploadPanel.jsx     # Drag-drop resume upload
+│   │   │   ├── ResultsPanel.jsx    # Ranked candidates table
+│   │   │   ├── CandidateCard.jsx   # Score badge + keywords
+│   │   │   ├── ScoreChart.jsx      # Recharts bar chart
+│   │   │   └── ExportButton.jsx    # CSV download
+│   │   ├── pages/
+│   │   │   ├── LoginPage.jsx
+│   │   │   └── Dashboard.jsx
+│   │   ├── hooks/
+│   │   │   ├── useScoring.js
+│   │   │   └── useAuth.js
+│   │   └── main.jsx
+│   ├── package.json
+│   └── Dockerfile
+│
+├── docker-compose.yml
+├── .github/
+│   └── workflows/
+│       └── ci.yml
+└── README.md
+```
+
+---
+
+## Getting Started
+
+### Prerequisites
+
+- Python 3.11+
+- Node.js 18+
+- Docker & Docker Compose (optional)
+- Git
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/resume-screener.git
+cd resume-screener
+```
+
+### 2. Backend Setup
+
+```bash
+cd backend
+
+# Create virtual environment
+python -m venv venv
+source venv/bin/activate        # Windows: venv\Scripts\activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Download spaCy model
+python -m spacy download en_core_web_sm
+
+# Copy and edit env file
+cp .env.example .env
+
+# Run the API server
+uvicorn app.main:app --reload --port 8000
+```
+
+> API live at: `http://localhost:8000`  
+> Interactive docs: `http://localhost:8000/docs`
+
+### 3. Frontend Setup
+
+```bash
+cd frontend
+npm install
+echo "VITE_API_URL=http://localhost:8000" > .env.local
+npm run dev
+```
+
+> Frontend live at: `http://localhost:5173`
+
+### 4. Create First User
+
+```bash
+curl -X POST http://localhost:8000/api/v1/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email": "hr@company.com", "password": "yourpassword"}'
+```
+
+---
+
+## API Reference
+
+Base URL: `/api/v1`  
+All endpoints except `/auth/*` require: `Authorization: Bearer <token>`
+
+### Authentication
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/auth/register` | Register new HR user |
+| `POST` | `/auth/login` | Login and receive JWT |
+
+### Job Descriptions
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/jd/create` | Create a new job description |
+| `GET` | `/jd/list` | List all job descriptions |
+| `GET` | `/jd/{jd_id}` | Get a specific JD |
+| `DELETE` | `/jd/{jd_id}` | Delete a JD and its scores |
+
+### Resumes
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/resume/upload` | Upload one or multiple resumes (PDF/DOCX) |
+| `GET` | `/resume/list` | List all uploaded resumes |
+
+### Scoring
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| `POST` | `/score/{jd_id}` | Trigger async scoring pipeline |
+| `GET` | `/results/{jd_id}` | Fetch ranked results |
+| `GET` | `/export/{jd_id}` | Download shortlist as CSV |
+
+**Sample scored result:**
+```json
+{
+  "resume_id": "abc-123",
+  "filename": "john_doe.pdf",
+  "bert_score": 0.82,
+  "tfidf_score": 0.71,
+  "final_score": 0.778,
+  "shortlisted": true,
+  "top_keywords": ["Python", "FastAPI", "machine learning", "PostgreSQL"],
+  "entities": {
+    "names": ["John Doe"],
+    "orgs": ["Google", "IIT Delhi"]
+  }
+}
+```
+
+---
+
+## ML Pipeline
+
+### Step 1 — Resume Parsing
+
+```python
+# app/ml/parser.py
+import PyPDF2, docx, spacy
+
+nlp = spacy.load('en_core_web_sm')
+
+def extract_text(file_bytes: bytes, filename: str) -> str:
+    if filename.endswith('.pdf'):
+        reader = PyPDF2.PdfReader(io.BytesIO(file_bytes))
+        return ' '.join(page.extract_text() for page in reader.pages)
+    elif filename.endswith('.docx'):
+        doc = docx.Document(io.BytesIO(file_bytes))
+        return ' '.join(para.text for para in doc.paragraphs)
+
+def extract_entities(text: str) -> dict:
+    doc = nlp(text[:5000])
+    return {
+        'names': [e.text for e in doc.ents if e.label_ == 'PERSON'],
+        'orgs':  [e.text for e in doc.ents if e.label_ == 'ORG'],
+        'dates': [e.text for e in doc.ents if e.label_ == 'DATE'],
+    }
+```
+
+### Step 2 — BERT Scoring
+
+```python
+# app/ml/bert_scorer.py
+from sentence_transformers import SentenceTransformer, util
+
+model = SentenceTransformer('all-MiniLM-L6-v2')  # 80MB, fast & accurate
+
+def bert_score(jd_text: str, resume_text: str) -> float:
+    jd_emb  = model.encode(jd_text,     convert_to_tensor=True)
+    res_emb = model.encode(resume_text, convert_to_tensor=True)
+    return round(float(util.cos_sim(jd_emb, res_emb).item()), 4)
+```
+
+### Step 3 — TF-IDF Scoring
+
+```python
+# app/ml/tfidf_scorer.py
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
+def tfidf_score(jd_text: str, resumes: list[str]) -> list[float]:
+    corpus = [jd_text] + resumes
+    vec    = TfidfVectorizer(stop_words='english', max_features=5000)
+    matrix = vec.fit_transform(corpus)
+    scores = cosine_similarity(matrix[0], matrix[1:]).flatten()
+    return [round(float(s), 4) for s in scores]
+```
+
+### Step 4 — Ensemble
+
+```python
+# app/ml/ensemble.py
+BERT_WEIGHT        = 0.6
+TFIDF_WEIGHT       = 0.4
+SHORTLIST_THRESHOLD = 0.65
+
+def ensemble_score(bert: float, tfidf: float) -> dict:
+    final = BERT_WEIGHT * bert + TFIDF_WEIGHT * tfidf
+    return {
+        'bert':        bert,
+        'tfidf':       tfidf,
+        'final':       round(final, 4),
+        'shortlisted': final >= SHORTLIST_THRESHOLD,
+    }
+```
+
+---
+
+## Environment Variables
+
+### Backend `.env`
+
+```env
+SECRET_KEY=your-super-secret-key-change-this
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=1440
+
+DATABASE_URL=sqlite:///./app.db
+
+BERT_MODEL=all-MiniLM-L6-v2
+BERT_WEIGHT=0.6
+TFIDF_WEIGHT=0.4
+SHORTLIST_THRESHOLD=0.65
+MAX_UPLOAD_SIZE_MB=10
+
+ALLOWED_ORIGINS=http://localhost:5173
+```
+
+### Frontend `.env.local`
+
+```env
+VITE_API_URL=http://localhost:8000
+VITE_APP_NAME=Resume Screener
+```
+
+---
+
+## Testing
+
+```bash
+cd backend
+
+# Run all tests
+pytest tests/ -v
+
+# Run with coverage
+pytest tests/ --cov=app --cov-report=html
+
+# Run specific file
+pytest tests/test_scorer.py -v
+```
+
+### Sample Tests
+
+```python
+def test_bert_score_high_similarity():
+    jd     = "Python developer with machine learning experience"
+    resume = "Experienced Python ML engineer, scikit-learn, TensorFlow"
+    assert bert_score(jd, resume) > 0.70
+
+def test_bert_score_low_similarity():
+    jd     = "Senior Java backend developer"
+    resume = "Graphic designer specialising in Photoshop and Illustrator"
+    assert bert_score(jd, resume) < 0.40
+
+def test_ensemble_shortlist():
+    result = ensemble_score(bert=0.80, tfidf=0.70)
+    assert result['shortlisted'] == True
+    assert result['final'] == 0.76
+
+def test_ensemble_below_threshold():
+    result = ensemble_score(bert=0.50, tfidf=0.40)
+    assert result['shortlisted'] == False
+```
+
+---
+
+## Docker Deployment
+
+```yaml
+# docker-compose.yml
+services:
+  backend:
+    build: ./backend
+    ports: ["8000:8000"]
+    environment:
+      - DATABASE_URL=sqlite:///./app.db
+      - SECRET_KEY=${SECRET_KEY}
+    volumes:
+      - resume_data:/app/uploads
+
+  frontend:
+    build: ./frontend
+    ports: ["5173:80"]
+    depends_on: [backend]
+    environment:
+      - VITE_API_URL=http://localhost:8000
+
+volumes:
+  resume_data:
+```
+
+```bash
+# Start everything
+docker compose up --build
+
+# Stop
+docker compose down
+```
+
+---
+
+## GitHub Actions CI
+
+```yaml
+name: CI
+on: [push, pull_request]
+
+jobs:
+  test-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.11" }
+      - run: pip install -r backend/requirements.txt
+      - run: python -m spacy download en_core_web_sm
+      - run: pytest backend/tests/ -v
+
+  build-frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: "18" }
+      - run: cd frontend && npm ci && npm run build
+```
+
+---
+
+## Extensions & Ideas
+
+### Explainability
+- **SHAP keyword highlights** — show exactly which resume tokens drove the score
+- **Match reasons** — "Your FastAPI and PostgreSQL skills matched 4/6 JD requirements"
+
+### Advanced ML
+- **Fine-tune BERT** on domain-specific hiring data (tech, finance, healthcare)
+- **Multi-label skill extraction** — extract and score individual skills as entities
+- **Multilingual** — use `paraphrase-multilingual-MiniLM` for non-English resumes
+
+### Fairness
+- **Bias detection** — flag gender-coded words in JDs ("rockstar", "ninja")
+- **Anonymised screening** — redact name, gender indicators before scoring
+
+### Integrations
+- **Chrome Extension** — score resumes directly from LinkedIn
+- **ATS webhook** — push results to Greenhouse, Lever, or Workday
+- **Slack bot** — get shortlist summary in your hiring Slack channel
+
+---
+
+## Performance Benchmarks
+
+| Metric | Target |
+|--------|--------|
+| Single resume scoring | < 500ms p95 |
+| Batch of 50 resumes | < 30 seconds |
+| BERT model load time | < 5s (one-time) |
+| Precision on benchmark | > 85% |
+| Max upload file size | 10 MB |
+
+---
+
+## Contributing
+
+1. Fork the repository
+2. Create a branch: `git checkout -b feature/bias-detection`
+3. Write tests and ensure they pass: `pytest tests/ -v`
+4. Commit clearly: `git commit -m "Add bias detection module"`
+5. Open a Pull Request
+
+**Code style:** Black + isort (backend) · ESLint + Prettier (frontend)
+
+---
+
+## Resources
+
+| Resource | Link |
+|----------|------|
+| sentence-transformers | https://sbert.net |
+| FastAPI | https://fastapi.tiangolo.com |
+| spaCy models | https://spacy.io/models |
+| Kaggle Resume Dataset | https://www.kaggle.com/datasets/snehaanbhawal/resume-dataset |
+| SHAP | https://shap.readthedocs.io |
+| React Query | https://tanstack.com/query |
+| Recharts | https://recharts.org |
+
+---
+
+## License
+
+MIT License — free to use, modify, and distribute.
+
+---
+
+*Built as part of the **30 Days 30 BTech Projects** challenge · Day 1 of 30*
