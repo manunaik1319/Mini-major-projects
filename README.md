@@ -1,38 +1,57 @@
 # 🎓 30 Days · 30 BTech Projects
 
-> **An advanced-to-medium engineering project challenge for BTech students** — one project per day, covering AI/ML, IoT, Web Dev, Systems, Data Engineering, and Security.
+> **A curated 30-day engineering project challenge for BTech students** to build a strong portfolio through practical, resume-worthy projects across **AI/ML, Web Development, IoT, Systems, Data Engineering, and Cybersecurity**.
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Projects-30-blue?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Domains-6-success?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Difficulty-Medium%20to%20Advanced-orange?style=for-the-badge" />
+  <img src="https://img.shields.io/badge/Build%20Time-6--10%20hrs%20each-purple?style=for-the-badge" />
+</p>
 
 ---
 
-## 📋 Overview
+## 📌 About This Repository
 
-This challenge is designed to help BTech students build a strong portfolio of real-world projects in 30 days. Each project is scoped to be completable in a single day (6–10 hours) while being substantial enough to showcase in placements and internship interviews.
+This repository is a **30-day project challenge** designed for BTech students who want to:
 
-| Metric | Value |
-|--------|-------|
-| Total Projects | 30 |
-| Domains Covered | 6 |
-| Difficulty Levels | Advanced & Medium |
-| Estimated Time per Project | 6–10 hours |
+- build a **strong GitHub portfolio**
+- improve their **development and problem-solving skills**
+- create **placement and internship-ready projects**
+- explore multiple high-demand engineering domains
 
----
-
-## 🗂️ Domains
-
-| Domain | Projects | Color |
-|--------|----------|-------|
-| 🤖 AI / ML | 8 | Red |
-| 🌐 Web Dev | 6 | Teal |
-| 🔒 Security | 4 | Purple |
-| ⚙️ Systems | 4 | Blue |
-| 📊 Data | 4 | Orange |
-| 📡 IoT | 4 | Amber |
+Each project is scoped to be **completed in a day**, while still being impressive enough to showcase in interviews, hackathons, or personal portfolios.
 
 ---
 
-## 📅 30-Day Project List
+## 🚀 Challenge Overview
 
-### Week 1 — Foundations & Quick Wins
+| Metric | Details |
+|--------|---------|
+| **Total Projects** | 30 |
+| **Domains Covered** | 6 |
+| **Difficulty Level** | Medium to Advanced |
+| **Estimated Time / Project** | 6–10 hours |
+| **Goal** | Build a job-ready portfolio in 30 days |
+
+---
+
+## 🧠 Domains Covered
+
+| Domain | No. of Projects |
+|--------|------------------|
+| 🤖 **AI / Machine Learning** | 8 |
+| 🌐 **Web Development** | 6 |
+| 🔒 **Cybersecurity** | 4 |
+| ⚙️ **Systems Programming** | 4 |
+| 📊 **Data Engineering / Analytics** | 4 |
+| 📡 **IoT / Embedded Systems** | 4 |
+
+---
+
+# 📅 30-Day Project Roadmap
+
+## Week 1 — Foundations & Quick Wins
 
 | Day | Project | Domain | Difficulty | Tech Stack |
 |-----|---------|--------|------------|------------|
@@ -44,7 +63,9 @@ This challenge is designed to help BTech students build a strong portfolio of re
 | 6 | Autonomous Drone Path Planner | AI/ML | Advanced | Python, PyTorch, OpenAI Gym, Three.js |
 | 7 | Expense Tracker with OCR Receipt Scan | Web Dev | Medium | React, FastAPI, Tesseract, SQLite |
 
-### Week 2 — Going Deeper
+---
+
+## Week 2 — Going Deeper
 
 | Day | Project | Domain | Difficulty | Tech Stack |
 |-----|---------|--------|------------|------------|
@@ -53,10 +74,12 @@ This challenge is designed to help BTech students build a strong portfolio of re
 | 10 | Fake News Detector | AI/ML | Medium | Python, TensorFlow, Flask, JavaScript |
 | 11 | Multi-Cloud Cost Optimizer | Systems | Advanced | Python, Terraform, React, Pandas |
 | 12 | AR Campus Navigation App | Web Dev | Advanced | React, Three.js, WebXR, Node.js |
-| 13 | Stock Portfolio Analyser | Data | Medium | Python, yFinance, Dash, Pandas |
+| 13 | Stock Portfolio Analyzer | Data | Medium | Python, yFinance, Dash, Pandas |
 | 14 | Distributed Key-Value Store | Systems | Advanced | Go, gRPC, Docker, Python |
 
-### Week 3 — Advanced Systems
+---
+
+## Week 3 — Advanced Builds
 
 | Day | Project | Domain | Difficulty | Tech Stack |
 |-----|---------|--------|------------|------------|
@@ -68,14 +91,16 @@ This challenge is designed to help BTech students build a strong portfolio of re
 | 20 | Customer Churn Predictor | Data | Medium | Python, XGBoost, SHAP, Streamlit |
 | 21 | Smart Irrigation System | IoT | Medium | Arduino, AWS IoT, MQTT, Python |
 
-### Week 4 — Capstone-Level Projects
+---
+
+## Week 4 — Capstone-Level Projects
 
 | Day | Project | Domain | Difficulty | Tech Stack |
 |-----|---------|--------|------------|------------|
 | 22 | Online Examination Platform | Web Dev | Medium | React, Node.js, MongoDB, WebSockets |
 | 23 | Gesture-Controlled Media Player | AI/ML | Medium | Python, MediaPipe, OpenCV, VLC |
 | 24 | Microservices E-Commerce Backend | Web Dev | Advanced | Node.js, Docker, Kafka, PostgreSQL |
-| 25 | Brain-Computer Interface Visualiser | Data | Advanced | Python, MNE, Matplotlib, WebSockets |
+| 25 | Brain-Computer Interface Visualizer | Data | Advanced | Python, MNE, Matplotlib, WebSockets |
 | 26 | Personal Finance AI Assistant | AI/ML | Medium | Python, LangChain, OpenAI, Streamlit |
 | 27 | Custom Operating System Shell | Systems | Advanced | C, GNU Make, Linux, Bash |
 | 28 | Satellite Image Change Detector | Data | Advanced | Python, PyTorch, GDAL, Leaflet |
@@ -84,121 +109,123 @@ This challenge is designed to help BTech students build a strong portfolio of re
 
 ---
 
-## 🚀 Project Deep-Dives
+# 🔍 Featured Project Deep Dives
 
-### Day 1 — AI-Powered Resume Screener
-**Description:** ML pipeline that ranks resumes against job descriptions using NLP similarity scores.
+## Day 1 — AI-Powered Resume Screener
+A machine learning pipeline that ranks resumes against job descriptions using **semantic similarity scoring**.
 
-**Key Features:**
-- TF-IDF & BERT embeddings for semantic matching
-- Ranked shortlist output with confidence scores
-- REST API via FastAPI
-- React dashboard for HR teams
+### Key Features
+- TF-IDF + BERT embeddings
+- Resume-job matching score
+- Candidate ranking dashboard
+- FastAPI REST API backend
 
-**Build Steps:**
-1. Collect & preprocess resume dataset
-2. Fine-tune BERT for similarity scoring
-3. Build FastAPI backend with ranking endpoint
-4. Create React dashboard with upload + results view
+### Build Steps
+1. Preprocess resumes and job descriptions  
+2. Generate semantic embeddings  
+3. Build ranking API using FastAPI  
+4. Create frontend dashboard for uploads and results  
 
 ---
 
-### Day 3 — Blockchain-Based Voting System
-**Description:** Decentralised tamper-proof voting dApp on Ethereum with voter anonymity.
+## Day 3 — Blockchain-Based Voting System
+A **tamper-proof decentralized voting application** built on Ethereum.
 
-**Key Features:**
+### Key Features
 - Smart contract-based vote casting
-- Zero-knowledge proofs for anonymity
-- Voter authentication via wallet
-- Real-time tally on-chain
+- Wallet-based voter authentication
+- On-chain vote tallying
+- Privacy-focused architecture
 
-**Build Steps:**
-1. Write Solidity voting contract
-2. Test with Hardhat local network
-3. Integrate Web3.js React frontend
-4. Deploy on Sepolia testnet
-
----
-
-### Day 14 — Distributed Key-Value Store
-**Description:** Custom Redis-like key-value store with replication and consistent hashing.
-
-**Key Features:**
-- Consistent hashing ring for node distribution
-- Configurable replication factor
-- TTL expiry for keys
-- gRPC client library
-
-**Build Steps:**
-1. Implement hash ring in Go
-2. Build node server with get/set/delete
-3. Add gRPC interface and client
-4. Dockerise multi-node cluster and test failover
+### Build Steps
+1. Develop the voting smart contract in Solidity  
+2. Test locally using Hardhat  
+3. Build React frontend with Web3 integration  
+4. Deploy to Ethereum testnet  
 
 ---
 
-### Day 27 — Custom Operating System Shell
-**Description:** Build a Unix-like shell from scratch in C supporting pipes, redirection, and job control.
+## Day 14 — Distributed Key-Value Store
+A **Redis-inspired distributed key-value store** with replication and consistent hashing.
 
-**Key Features:**
-- Command parsing and tokenisation
-- Piping (`|`) and I/O redirection (`>`, `<`, `>>`)
-- Background job control (`&`, `fg`, `bg`, `jobs`)
-- Built-in commands: `cd`, `exit`, `history`
+### Key Features
+- Distributed node architecture
+- Key replication support
+- TTL expiration
+- gRPC-based client communication
 
-**Build Steps:**
-1. Implement tokeniser and parser
-2. Fork & exec for process creation
-3. Add pipe and redirection logic
-4. Handle signals and job control
+### Build Steps
+1. Implement hashing and node distribution  
+2. Create GET / SET / DELETE operations  
+3. Add replication support  
+4. Dockerize and test failover handling  
 
 ---
 
-### Day 30 — Full-Stack SaaS Boilerplate
-**Description:** Production-ready SaaS starter with auth, billing, multi-tenancy, admin panel, and CI/CD.
+## Day 27 — Custom Operating System Shell
+A **Unix-like shell built from scratch in C** supporting piping, redirection, and job control.
 
-**Key Features:**
-- OAuth + MFA authentication via NextAuth
+### Key Features
+- Token parsing and execution
+- Input/output redirection
+- Background process handling
+- Built-in commands like `cd`, `exit`, and `history`
+
+### Build Steps
+1. Build tokenizer and parser  
+2. Use `fork()` and `exec()` for process execution  
+3. Add piping and redirection  
+4. Implement signal handling and job control  
+
+---
+
+## Day 30 — Full-Stack SaaS Boilerplate
+A **production-ready SaaS starter template** with authentication, billing, multi-tenancy, and deployment.
+
+### Key Features
+- OAuth + MFA authentication
 - Stripe subscription billing
-- Multi-tenant database with Prisma
+- Multi-tenant architecture
 - Admin dashboard
-- GitHub Actions CI/CD pipeline
+- CI/CD integration
 
-**Build Steps:**
-1. Scaffold Next.js app with TypeScript
-2. Integrate NextAuth with Google/GitHub providers
-3. Wire Stripe billing with webhooks
-4. Set up Prisma with multi-tenant schema
-5. Deploy to AWS with CI/CD
+### Build Steps
+1. Scaffold Next.js app  
+2. Integrate authentication providers  
+3. Connect Stripe billing workflows  
+4. Set up Prisma and database schema  
+5. Deploy with CI/CD pipeline  
 
 ---
 
-## 🛠️ Prerequisites
+# 🛠️ Prerequisites
 
-### Languages
+## Languages
 - Python 3.10+
-- JavaScript / TypeScript (Node.js 18+)
+- JavaScript / TypeScript
 - Go 1.21+
 - C (GCC)
 - Solidity 0.8+
 
-### Tools
+## Tools
 - Git & GitHub
 - Docker & Docker Compose
-- Kubernetes (minikube for local)
+- Kubernetes (optional / local setup)
 - VS Code or any IDE
 
-### Cloud Accounts (Free Tier)
+## Optional Free-Tier Platforms
 - AWS Free Tier
 - GCP Free Tier
-- Vercel / Railway for web deployments
+- Vercel
+- Railway
+- Render
 
 ---
 
-## 📁 Suggested Folder Structure
+# 📁 Suggested Repository Structure
 
-```
-30-days-30-projects/
+```bash
+30-days-30-btech-projects/
 ├── day-01-resume-screener/
 │   ├── backend/
 │   ├── frontend/
@@ -214,90 +241,3 @@ This challenge is designed to help BTech students build a strong portfolio of re
     ├── prisma/
     ├── .github/workflows/
     └── README.md
-```
-
-Each project folder should have its own `README.md` with:
-- Problem statement
-- Architecture diagram
-- Setup instructions
-- Demo screenshots or video link
-
----
-
-## 📈 Difficulty Distribution
-
-```
-Advanced Projects  ████████████████  17 (57%)
-Medium Projects    █████████████     13 (43%)
-```
-
-### Skill Progression by Week
-
-| Week | Focus | Avg. Difficulty |
-|------|-------|-----------------|
-| Week 1 | Core ML, IoT, Blockchain | High |
-| Week 2 | Full-stack, DevOps, Data | Medium-High |
-| Week 3 | Real-time systems, Security | High |
-| Week 4 | Distributed systems, Capstone | Very High |
-
----
-
-## 💡 Tips for Success
-
-1. **Start simple, iterate fast** — get a working version first, then add features
-2. **Document as you build** — write your project README alongside the code
-3. **Push to GitHub daily** — consistent commits look great on your profile
-4. **Deploy everything** — even a Heroku/Railway free tier deployment counts
-5. **Record demos** — a 2-minute Loom demo is worth 1000 words in interviews
-6. **Pair-program** — some projects are better tackled with a partner
-7. **Don't skip testing** — write at least basic tests for each project
-8. **Share your progress** — post daily updates on LinkedIn with #30Days30Projects
-
----
-
-## 🏆 Portfolio Outcomes
-
-After completing this challenge you will have:
-
-- **30 GitHub repositories** with real, deployed projects
-- **6 domain specialisations** to highlight to recruiters
-- Deep hands-on experience with 30+ tools and frameworks
-- A personal portfolio website linking all projects
-- Material for at least 5 strong placement interview stories
-
----
-
-## 📚 Resources
-
-| Resource | Link |
-|----------|------|
-| Python Docs | https://docs.python.org/3/ |
-| React Docs | https://react.dev |
-| Go Docs | https://go.dev/doc/ |
-| Solidity Docs | https://docs.soliditylang.org |
-| Hugging Face | https://huggingface.co |
-| Kaggle Datasets | https://kaggle.com/datasets |
-| Docker Docs | https://docs.docker.com |
-| Kubernetes Docs | https://kubernetes.io/docs |
-| AWS Free Tier | https://aws.amazon.com/free |
-
----
-
-## 🤝 Contributing
-
-Found a better tech stack for a project? Have a project idea for a missing domain? Contributions are welcome!
-
-1. Fork this repository
-2. Create your branch: `git checkout -b feature/day-31-idea`
-3. Commit your changes: `git commit -m 'Add Day 31: XYZ project'`
-4. Push and open a Pull Request
-
----
-
-## 📄 License
-
-This project list is open-source under the MIT License. Build freely, learn deeply, and share your work with the community.
-
----
-
-*Built with ❤️ for BTech students. Start Day 1 today — your future self will thank you.*
